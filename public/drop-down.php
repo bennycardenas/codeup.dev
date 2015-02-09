@@ -6,6 +6,7 @@
 <html>
 <head>
 	<title>Drop Down</title>
+	<link rel="stylesheet" type="text/css" href="/css/drop-down.css">
 </head>
 <body>
 
@@ -16,12 +17,12 @@
 	<label for="favorite_fruit">Favorite Fruit</label>
 	<select id="favorite_fruit" name="favorite_fruit[] multiple">
 		<option>Apple</option>
-		<option>Banana</option>
-		<option>Grapre</option>
+		<option selected="selected">Banana</option>
+		<option>Grape</option>
 		<option>Guava</option>
 	</select>
-
-	<input type="submit">		
+</form>
+	<!-- <input type="submit">		 -->
 
 
 <form>
@@ -36,7 +37,12 @@
     <input type="submit">
     </p>
 
-</form>
+<ul>
+	<li>sure</li>
+	<li>maybe</li>
+	<li>maybe so</li>
+</ul>
+
 
 
 </form>
