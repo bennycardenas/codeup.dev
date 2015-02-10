@@ -1,0 +1,66 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+
+<script>
+
+// ignore these lines for now
+// just know that the variable 'color' will end up with a random value from the colors array
+var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+var color = colors[Math.floor(Math.random()*colors.length)];
+
+switch (color) {
+
+    // todo: create a case statement that will handle every color except indigo and violet
+
+    case 'red':
+    	console.log(color + ' ...like an apple');
+    	break;
+    case 'orange':
+    	console.log(color + ' ...like a graperfruit');
+    	break;
+    case 'yellow':
+    	console.log(color + ' ...like a traffic light');
+    	break;
+    case 'green':
+    	console.log(color + ' ...like an avocado');
+    	break;
+    case 'blue':
+		console.log(color + ' ...like the sky');
+		break;
+    	
+
+    // todo: when a color is encountered log a message that tells the color, and an object of that color
+    // example: Blue is the color of the sky.
+
+    
+
+    // todo: create a default case that will catch indigo and violet
+
+   //  	case 'indigo':
+			// console.log(color + '...umm yeah');
+			// break;
+   //  	case 'violet':
+   //  		console.log(color + '...umm yeah');
+   //  		break;
+
+    		default:
+    			console.log( color + "...umm Yeah")
+
+
+    // todo: for the default case, log: I do not know anything by that color.
+
+   
+}
+ 
+
+</script>
+
+
+
+</body>
+</html>
