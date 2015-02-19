@@ -1,0 +1,47 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<h1 id="main-heading">Hello World!</h1>
+	<div id="main-section">
+    	<p>Paragraph 1</p>
+    	<p>Paragraph 2</p>
+	</div>
+
+<script>
+    
+
+    var mainHeading = document.getElementById('main-heading');
+
+    function increaseFont(){
+    	// var content = mainHeading.innerText;
+    	mainHeading.innerHTML = "<h1><em>Goodbye, World</em></h1>"
+    }
+
+    mainHeading.addEventListener('click', increaseFont, false);
+
+
+    // // get the main heading h1 by id
+    // var mainHeading = document.getElementById('main-heading');
+
+    // console.log(mainHeading.innerHTML); // prints Hello World!
+
+    // // assign a new value to the inner HTML of the main heading
+    // mainHeading.innerHTML = "Hello Codeup!";
+
+    // console.log(mainHeading.innerHTML); // prints Hello Codeup!
+
+    // // get the main section div by id
+    // var mainSection = document.getElementById('main-section');
+
+    // console.log(mainSection.innerHTML);
+    // //prints
+    // // <p>Paragraph 1</p>
+    // // <p>Paragraph 2</p>
+</script>
+
+
+</body>
+</html>
