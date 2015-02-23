@@ -1,0 +1,179 @@
+<html>
+<head>
+	<title>Calculator</title>
+</head>
+
+<style type="text/css">
+#input1 {
+	width: 80px;
+	height: 40px; 
+}
+
+#operator {
+	width:35px;
+	height: 40px; 
+}
+
+#input2 {
+	width: 80px;
+	height: 40px; 
+}
+
+button {
+
+	width: 48px;
+	height: 35px;
+}
+
+</style>
+
+
+<body>
+
+<div class="container">
+	<div class="row">
+		<input type="text" id="input1" class="display" value="" readonly>
+		<input type="text" id="operator" class="display" value="" readonly>
+		<input type="text" id="input2" class="display" value="" readonly>
+	</div>
+	<br>
+	<div class="row">
+		<button id="1" value="1">1</button>
+		<button id="2" value="2">2</button>
+		<button id="3" value="3">3</button>
+		<button class="operator" id="addition" value="+">+</button>
+	</div>
+	<div class="row">
+		<button id="4" value="4">4</button>
+		<button id="5" value="5">5</button>
+		<button id="6" value="6">6</button>
+		<button class="operator" id="subtraction" value="-">-</button>
+	</div>
+	<div class="row">
+		<button id="7" value="7">7</button>
+		<button id="8" value="8">8</button>
+		<button id="9" value="9">9</button>
+		<button class="operator" id="multiplication" value="*">*</button>
+	</div>
+	<div class="row">
+		<button id="c" value="c">C</button>
+		<button id="0" value="0">0</button>
+		<button id="=" value="=">=</button>
+		<button class="operator" id="division" value="/">/</button>
+	</div>	
+</div>
+
+<script type="text/javascript">
+
+
+var b0 = document.getElementById('0')
+var b1 = document.getElementById('1')
+var b2 = document.getElementById('2')
+var b3 = document.getElementById('3')
+var b4 = document.getElementById('4')
+var b5 = document.getElementById('5')
+var b6 = document.getElementById('6')
+var b7 = document.getElementById('7')
+var b8 = document.getElementById('8')
+var b9 = document.getElementById('9')
+
+var mult = document.getElementById('multiplication')
+var sub = document.getElementById('subtraction')
+var add = document.getElementById('addition')
+var div = document.getElementById('division')
+var c = document.getElementById('c')
+var equals = document.getElementById('=')
+
+
+
+var btnClick = function (event){
+	var operator = document.getElementById('operator').value
+	console.log(this)
+	console.log(isNaN(this.value))
+		if (isNaN(this.value) && this.value != "c" && this.value != "="){
+			document.getElementById('operator').value = this.value;
+		} else if (!isNaN(this.value) && operator) {
+			document.getElementById('input2').value += this.value;
+		} else {
+			document.getElementById('input1').value += this.value;		
+		}
+
+}
+
+
+// input1 = answer at end of loop after last else statement
+// var equalBtn = function(event){
+
+
+// }
+
+b1.addEventListener('click', btnClick , false);
+b2.addEventListener('click', btnClick , false);
+b3.addEventListener('click', btnClick , false);
+b4.addEventListener('click', btnClick , false);
+b5.addEventListener('click', btnClick , false);
+b6.addEventListener('click', btnClick , false);
+b7.addEventListener('click', btnClick , false);
+b8.addEventListener('click', btnClick , false);
+b9.addEventListener('click', btnClick , false);
+b0.addEventListener('click', btnClick , false);
+
+mult.addEventListener('click', btnClick , false);
+sub.addEventListener('click', btnClick , false);
+add.addEventListener('click', btnClick , false);
+div.addEventListener('click', btnClick , false);
+c.addEventListener('click', btnClick , false);
+equals.addEventListener('click', btnClick , false);
+
+
+
+
+// else {
+// 			document.getElementById('input2').value += this.value;
+
+// 		}
+
+// var btnClick2 = function (event){
+// 		document.getElementById('input2').value += this.value;
+// }
+
+
+
+
+
+// var num0 = b0.this.value
+// 	function sendNumber (number) {
+		
+// 	}
+
+
+
+// function subtract (a,b){
+// 	parseInt(a) - parseInt(b);
+// }
+
+// function add(a,b){
+// 	parseInt(a) + parseInt(b);
+// }
+
+// function multiply(a,b){
+// 	parseInt(a) * parseInt(b);
+// }
+
+// function divide(a,b){
+// 	parseInt(a) / parseInt(b);
+// }
+
+// C button according to MAx
+// var btnCListen = function(event){
+// 	input1.value = ""
+// 	operator.value = ""
+// 	input2.value = ""
+// }
+
+
+
+</script>
+
+</body>
+</html>

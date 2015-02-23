@@ -23,6 +23,11 @@
         culpa qui officia deserunt mollit anim id est laborum.
     </p>
 
+<button id="btn1">Click Me!</button><br>
+<button id="btn2">Click Me!</button><br>
+<button id="btn3">Click Me!</button><br>
+<button id="btn4">Click Me!</button><br>
+
     <script>
 
         // todo: get the main header element by id
@@ -66,6 +71,56 @@
             subParagraphs[0].innerHTML = "Mission Accomplished"
         }
 
+
+// EVENT LISTENER
+
+        var listener1 = function (event) {
+            mainHeader.innerHTML = "JavaScript is cool";
+        }
+
+        // ENTER FOR loop THAT CHANGED THE COLOR TO GREY
+        // THEN listItems[0]style.color="blue"; 
+        var listener2 = function(event){
+            alert('You clicked this!');
+        }
+
+        var listener3 = function(event){
+            subParagraphs[0].innerHTML="Mission Accomplished";
+        };
+
+        var listener4 = function(event){
+            subHeader.style.color = "blue";
+        }
+
+
+
+        var btn1 = document.getElementById('btn1');
+        btn1.addEventListener('click', listener1, false);
+
+        var btn2 = document.getElementById('btn2');
+        btn2.addEventListener('click', listener2, false);
+
+
+        var btn3 = document.getElementById('btn3');
+        btn3.addEventListener('click', listener3, false);
+
+        var btn4 = document.getElementById('btn4');
+        btn4.addEventListener('click', listener4, false);
+
+
+        
+
+        // create a handler function
+        // 
+        //     
+
+        // var Listener = function(event) {
+        //     subHeader.innerHTML = "Button Works!!!";
+        // }
+
+
+        // register the listener to handle clicks on btn1(OR ANY BUTTON, FOR THAT MATTER)
+        // document.getElementById('btn1').addEventListener('click', listener, false);
 
 
     </script>
