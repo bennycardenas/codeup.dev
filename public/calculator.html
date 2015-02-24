@@ -25,8 +25,11 @@ button {
 	height: 35px;
 }
 
-</style>
+.container {
+	border: 5px;
+}
 
+</style>
 
 <body>
 
@@ -56,7 +59,7 @@ button {
 		<button class="operator" id="multiplication" value="*">*</button>
 	</div>
 	<div class="row">
-		<button id="c" value="c">C</button>
+		<button id="c" value="c" OnClick="input.value = ''">C</button>
 		<button id="0" value="0">0</button>
 		<button id="=" value="=">=</button>
 		<button class="operator" id="division" value="/">/</button>
@@ -88,23 +91,70 @@ var equals = document.getElementById('=')
 
 var btnClick = function (event){
 	var operator = document.getElementById('operator').value
-	console.log(this)
-	console.log(isNaN(this.value))
+	console.log(this.value)
+	// console.log(isNaN(this.value))
 		if (isNaN(this.value) && this.value != "c" && this.value != "="){
 			document.getElementById('operator').value = this.value;
+		} else if(this.value == "="){
+			equalsAnswer();
 		} else if (!isNaN(this.value) && operator) {
 			document.getElementById('input2').value += this.value;
 		} else {
 			document.getElementById('input1').value += this.value;		
 		}
+}
+
+// ----------------------------------------------------------------------
+// C BUTTON
+
+var cBtn = function(){
+		{
+		document.getElementById('input1').value = "";
+		document.getElementById('input2').value = "";
+		document.getElementById('operator').value = "";
+		}
+	}
+
+// window.location.reload();
+// } else if {
+// C button according to MAx
+// var btnCListen 
+// }
+
+// ----------------------------------------------------------------------
+// EQUALS
+var equalsAnswer = function(){
+
+var operator = document.getElementById('operator').value
+var inputBox1 = document.getElementById('input1').value
+var val1 = parseInt(input1.value)
+var val2 = parseInt(input2.value)
+
+console.log(operator)
+
+	if (operator == "+") {
+		inputBox1=val1 + val2;
+	} else if (operator == "-"){
+		 inputBox1=val1 - val2;
+	} else if (operator == "/"){
+		 inputBox1=val1 / val2;
+	} else if (operator == "*"){
+		 inputBox1=val1 * val2;
+	}
+	console.log(inputBox1)
+	console.log(input1)
+
+document.getElementById('input1').value = inputBox1
+document.getElementById('operator').value = ""
+document.getElementById('input2').value = ""
 
 }
 
 
+
+// }
 // input1 = answer at end of loop after last else statement
 // var equalBtn = function(event){
-
-
 // }
 
 b1.addEventListener('click', btnClick , false);
@@ -122,55 +172,43 @@ mult.addEventListener('click', btnClick , false);
 sub.addEventListener('click', btnClick , false);
 add.addEventListener('click', btnClick , false);
 div.addEventListener('click', btnClick , false);
-c.addEventListener('click', btnClick , false);
+c.addEventListener('click', cBtn , false);
 equals.addEventListener('click', btnClick , false);
+
+
 
 
 
 
 // else {
 // 			document.getElementById('input2').value += this.value;
-
 // 		}
 
 // var btnClick2 = function (event){
 // 		document.getElementById('input2').value += this.value;
 // }
 
-
-
-
-
 // var num0 = b0.this.value
-// 	function sendNumber (number) {
-		
+// 	function sendNumber (number) {		
 // 	}
 
 
 
 // function subtract (a,b){
-// 	parseInt(a) - parseInt(b);
+// 	return parseInt(a) - parseInt(b);
 // }
 
 // function add(a,b){
-// 	parseInt(a) + parseInt(b);
+// 	return parseInt(a) + parseInt(b);
 // }
 
 // function multiply(a,b){
-// 	parseInt(a) * parseInt(b);
+// return parseInt(a) * parseInt(b);
 // }
 
 // function divide(a,b){
-// 	parseInt(a) / parseInt(b);
+// return parseInt(a) / parseInt(b);
 // }
-
-// C button according to MAx
-// var btnCListen = function(event){
-// 	input1.value = ""
-// 	operator.value = ""
-// 	input2.value = ""
-// }
-
 
 
 </script>
