@@ -1,0 +1,94 @@
+<html>
+<head>
+	<title>jQIntro</title>
+	<script src="/js/jquery.js"></script>
+
+</head>
+<body>
+
+
+<h1 id="welcome">Welcome to this important item</h1>
+	
+	<div class="codeup">
+		<ul id="Unordered-List">
+			<li class='languages'>Spanish</li>
+			<li class='languages'>English</li>
+			<li class='languages'>Music</li>
+			<li class='languages'>French</li>
+		</ul>
+	</div>
+	<br>
+	<div class="codeup">
+		<ul id="Unordered-List">
+			<li class='languages'>Spanish</li>
+			<li class='languages'>English</li>
+			<li class='languages'>Music</li>
+			<li class='languages'>French</li>
+		</ul>
+	</div>
+	<br>
+	<div class="codeup">
+		<ul id="Unordered-List">
+			<li class='languages'>Spanish</li>
+			<li class='languages'>English</li>
+			<li class='languages'>Music</li>
+			<li class='languages'>French</li>
+		</ul>
+	</div>
+
+<p class="important">BTW, This is also very important.</p>
+
+	
+<script type="text/javascript">
+
+
+
+
+
+$(document).ready(function() {
+
+	alert('DOM has finished loading!');
+
+	//CHANGE BACKGROUND OF H1 TO RED WHEN CLICKED
+	$('h1').click(function(){
+		$(this).css('background-color', 'red');
+		});
+
+	// MAKE ALL PARAGRAPHS HAVE FONT SIZE OF 18 WHEN DOUBLE CLICKED
+	$('p').dblclick(function(){
+		$(this).css('font-size', '48px');
+		});	
+
+	//HOVER - red when the mouse is hovering, reset to white when it is not.
+	$('li').hover(
+		function(){
+			$(this).css('color','red');
+		},
+		function(){
+			$(this).css('color','white');
+		}
+		);
+	});
+
+
+// $('.codeup').css('border', '3px').css('border-style', 'solid').css('background-color', 'red')
+
+// $('p').css('font-size', '48px')
+
+// // THE FOLLOWING LINE CHANGES FONT SIZES FOR THE FIRST 3 
+// $('.important, #Unordered-List, .languages').css('font-size', '36px')
+
+
+	// $(document).ready(function(){
+	// 	alert('The DOM has finished loading!');
+	// 	});
+
+	// $('document').ready(function(){
+	// 	var contents = $('#welcome').html();
+	// 	alert(contents);
+	// });
+
+</script>
+
+</body>
+</html>

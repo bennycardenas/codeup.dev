@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>Keyboard Events</title>
+	<script src="/js/jquery.js"></script>
+</head>
+<body>
+
+<h1 id="myName">myName</h1>
+
+<script type="text/javascript">
+
+var count = 0;
+
+var keyPressArray=[];
+var nameArray=[98, 101, 110, 110, 121];
+
+	$(document).keypress(function(event){
+		console.log(event.keyCode);
+
+// Grab the sequence of keys
+		keyPressArray.push(event.keyCode);
+		console.log(nameArray);
+		console.log(keyPressArray);
+		count++;
+
+// When they match your name, attach that name to the h1 tag above
+// (event.keyCode == myName)
+		
+		if (nameArray[count] == keyPressArray[count]) {
+			$('#myName').html("benny")
+		// } else {
+		// 	alert('you lost')
+		}
+		
+//create this sequence and alert('You have an additional 30 lives')
+// up,up, down, down, left, right, left, right, b, a, enter
+
+	});
+
+</script>
+
+</body>
+</html>
