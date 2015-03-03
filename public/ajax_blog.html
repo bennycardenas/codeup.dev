@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title>Ajax Blog</title>
+</head>
+
+<body>
+	<h1>World of AJAX/AJAJ blogs</h1>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+	
+
+
+
+	<div id='posts'>
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+(function() {
+
+	$.get('/data/blog.json').done(function(data) {
+		console.log(data);
+		console.log('AJAX request to blog.json went through properly.');
+		
+		blogPost = ''
+
+		$(data).each(function(index, element){
+
+			
+			//SET UP THE INSERTION CODE HERE
+				blogPost += '<article>';
+				blogPost += '<h1>' + element.title + '</h1>';
+				blogPost += '<p>' + (element.content || element.posts) + '</p>' ;
+				// blogPost += '<p>' +  + '</p>' ;
+				blogPost += '<p><em>Categories: </em>' + element.categories.join(", ") + '</p>' ;
+				blogPost += '<p><em>Date: </em>' + element.date + '</p>' ;
+				blogPost += '</article>';
+				blogPost += '<hr>';
+
+			$('#posts').html(blogPost)
+
+			});
+	});
+	
+	$.get('/data/blog.json').fail(function(){
+		console.log('Ajax request to blog.json failed.')
+	});	
+
+})();
+
+</script>
+</body>
+</html>

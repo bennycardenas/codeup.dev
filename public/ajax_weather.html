@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+</head>
+<body>
+
+    <h1>SA Weather</h1>
+
+    <div id="weather"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script>
+(function() {
+    var weatherDisplay = $('#weather');
+    var weatherHtml = '';
+
+    var currentWeather = $.ajax('http://api.openweathermap.org/data/2.5/weather?q=San+Antonio,TX');
+
+    currentWeather.done(function(data) {
+	    console.log(data);
+
+	        // simple weather jazz plugin per Keenan
+	        // sign up for API for OpenWeatherMap
+	        // For Forecast
+	        // high temp in F
+	        // low temp in F
+
+	       
+
+			var currentTemp = '<p>Current Temp: ' + parseInt((data.main.temp - 273.15)*1.8 + 32) + '°F</p>';
+			// current temp in F
+			var icon = '<img src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png">';
+			//dynamic icon png
+	        var humidity = '<p>Humidity Percentage: ' + data.main.humidity + '<p>';
+	        // humidity percentage
+	        var windSpeed = '<p>Wind Speed: ' + data.wind.speed + '<p>';
+	        // wind
+	        var pressure = '<p>Pressure: ' + data.main.pressure + '<p>';
+	        // pressure
+	        var weatherToDisplay = currentTemp + icon + windSpeed + humidity + pressure;
+
+        $('#weather').html(weatherToDisplay);
+
+    });
+    currentWeather.fail(function(){
+    	console.log('500, Error connecting to openweathermap API');
+    });
+})();
+</script>
+
+</body>
+</html>
