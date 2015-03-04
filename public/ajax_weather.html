@@ -4,8 +4,7 @@
     <title>Weather App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-</head>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF11wPi5SN3aYUOdRD8DnEYfCNAFI0ClA"></script>
 
 <style type="text/css">
 
@@ -19,7 +18,7 @@
 }
 
 .container-fluid {
-	background-color: lightblue;
+	background-color: #abdcfd;
 	padding-bottom: 20px;
 	padding-left: 30px;
 	padding-right: 30px;
@@ -27,33 +26,50 @@
 
 </style>
 
+<style type="text/css">
+  #map-canvas {
+    width: 100%;
+    height: 480px;
+  }
+  </style>
+
+</head>
+
 <body>
 		<div class="container-fluid">
 		    <h1>3-Day Forecast Application</h1>
+		    	<h2 id="city"></h2>
 		    	<div class='row'>
 		    		<div id="weather"></div>
 		    	</div>
 		</div>
+<!-- <br> -->
+		<div id="map-canvas"></div>
 	
 <script>
 
 (function() {
     var weatherToDisplay = $('#weather');
-    var weatherDisplay = ''
+    
 
     var weatherForecast = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat=29.423017&lon=-98.48527&cnt=3&mode=json');
 
-	    weatherForecast.done(function(data) {
+	    function getWeatherInformation(data) {
 		    console.log(data);
+
+		    	var cityName = $('#city');
+		    	var weatherDisplay = '';
 
 			    $(data.list).each(function(index, element){
 
 			    	var mph = function(speed){
-    				console.log(mph);
+    				// console.log(mph);
     				return element.speed * 2.23694;
     				}
 
 			    	// console.log("This is the index: " + index + "This is the element: " + element)
+
+			    	// var dayOfTheWeek = '<p>' + element.dt + '<p>';
 
 					var bothtTemps = '<div class="col-md-4"><h2> <p>' + parseInt((element.temp.max - 273.15)*1.8 + 32) + "°/" 
 						+ parseInt((element.temp.min - 273.15)*1.8 + 32) + '°F</h2></p>';
@@ -72,16 +88,126 @@
 		        	// console.log(weatherDisplay);
 		        	// console.log(weatherToDisplay);
 		    	});
-			    	
+			    	cityName.html(data.city.name + ", " + data.city.country)
 			    	weatherToDisplay.html(weatherDisplay);	
-		});
+		};
 
 			weatherForecast.fail(function(){
 		   		console.log('500, Error connecting to openweathermap API');
 			    	});
 	
-})();
 
+
+// INSERTED MAP FROM GOOGLE MAPS API EXERCISE
+
+	var address = '110 E. Pecan, San Antonio, TX, 78205';
+
+    var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode( { 'address': address}, function(results, status) {
+  	
+  	// Check for a successful result
+  	if (status == google.maps.GeocoderStatus.OK) {
+  		} else {
+    // Show an error message with the status if our request fails
+    alert("Geocoding was not successful - STATUS: " + status);
+	  }
+  });
+    
+    // Set our map options
+    var mapOptions = {
+      // This sets the center of the map at our location
+      // center: results[0].geometry.location,
+      center: { lat: 29.424122, lng: -98.493628 },
+      // Set the zoom level
+      zoom: 10,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+	
+      };
+
+   	
+// Render the map
+    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+   
+  	// Create lat and long for our marker position
+    // var vivaPho = { lat: 29.531563, lng: -98.522059 };
+
+    //Image for marker
+    // var image = "/img/pho.png"
+
+    // ADD THE MARKER TO OUR EXISTING MAP
+  	
+  	var marker = new google.maps.Marker({
+      position: mapOptions.center,
+      draggable: true,
+      animation: google.maps.Animation.DROP,
+      map: map,
+      // icon: image,
+      // animation: google.maps.Animation.DROP,
+
+    });
+
+  	var satx = { lat: 29.424122, lng: -98.493628 }
+
+  	var weather;
+  	// var getWeatherInformation = '';
+
+  	weather = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat='
+  		+ satx.lat 
+  		+ '&lon=' 
+  		+ satx.lng
+  		+ '&cnt=3&mode=json&units=metric');
+
+  		weather.done(getWeatherInformation);
+
+  	google.maps.event.addListener(marker, 'dragend', function(event){
+  		console.log(this.getPosition());
+
+  		var test = 'http://api.openweathermap.org/data/2.5/forecast/daily?lat='
+  		+ this.getPosition().lat() 
+  		+ '&lon=' 
+  		+ this.getPosition().lng()
+  		+ '&cnt=3&mode=json&units=metric'
+  		console.log(test);
+
+  		weather = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat='
+  		+ this.getPosition().lat() 
+  		+ '&lon=' 
+  		+ this.getPosition().lng()
+  		+ '&cnt=3&mode=json&units=metric');
+
+  		weather.done(getWeatherInformation);
+  	});
+
+  	// var weather = $('weather');
+
+  	// function getWeatherInformation(data) {
+  	// 	console.log(data);
+  	// 	var weatherHtml = '';
+  		
+  	// 	var city = data.city.name;
+  	// 	weatherHtml += '<h2>' + city + '</h2>';
+  		
+  	// 	for (var i=0, data.list.length, i++)
+  	// 	var date = data.list[i].dt;
+
+
+  	// }
+
+  	// WINDOW
+	// Create a new infoWindow object with content
+	var infowindow = new google.maps.InfoWindow({
+    content: 'Drag to get new Forecast'
+	});
+
+// Open the window using our map and marker
+infowindow.open(map,marker);
+
+
+
+// END OF MAP FROM GOOGLE MAPS API EXERCISE
+
+})();
 
 
 
