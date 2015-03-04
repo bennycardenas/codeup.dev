@@ -2,53 +2,129 @@
 <html>
 <head>
     <title>Weather App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 </head>
+
+<style type="text/css">
+
+#weather {
+	border: 10px;
+}
+
+.col-md-4 {
+	border: solid;
+	color: black;
+}
+
+.container-fluid {
+	background-color: lightblue;
+	padding-bottom: 20px;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+</style>
+
 <body>
-
-    <h1>SA Weather</h1>
-
-    <div id="weather"></div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+		<div class="container-fluid">
+		    <h1>3-Day Forecast Application</h1>
+		    	<div class='row'>
+		    		<div id="weather"></div>
+		    	</div>
+		</div>
+	
 <script>
+
 (function() {
-    var weatherDisplay = $('#weather');
-    var weatherHtml = '';
+    var weatherToDisplay = $('#weather');
+    var weatherDisplay = ''
 
-    var currentWeather = $.ajax('http://api.openweathermap.org/data/2.5/weather?q=San+Antonio,TX');
+    var weatherForecast = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat=29.423017&lon=-98.48527&cnt=3&mode=json');
 
-    currentWeather.done(function(data) {
-	    console.log(data);
+	    weatherForecast.done(function(data) {
+		    console.log(data);
 
-	        // simple weather jazz plugin per Keenan
-	        // sign up for API for OpenWeatherMap
-	        // For Forecast
-	        // high temp in F
-	        // low temp in F
+			    $(data.list).each(function(index, element){
 
-	       
+			    	var mph = function(speed){
+    				console.log(mph);
+    				return element.speed * 2.23694;
+    				}
 
-			var currentTemp = '<p>Current Temp: ' + parseInt((data.main.temp - 273.15)*1.8 + 32) + '°F</p>';
-			// current temp in F
-			var icon = '<img src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png">';
-			//dynamic icon png
-	        var humidity = '<p>Humidity Percentage: ' + data.main.humidity + '<p>';
-	        // humidity percentage
-	        var windSpeed = '<p>Wind Speed: ' + data.wind.speed + '<p>';
-	        // wind
-	        var pressure = '<p>Pressure: ' + data.main.pressure + '<p>';
-	        // pressure
-	        var weatherToDisplay = currentTemp + icon + windSpeed + humidity + pressure;
+			    	// console.log("This is the index: " + index + "This is the element: " + element)
 
-        $('#weather').html(weatherToDisplay);
+					var bothtTemps = '<div class="col-md-4"><h2> <p>' + parseInt((element.temp.max - 273.15)*1.8 + 32) + "°/" 
+						+ parseInt((element.temp.min - 273.15)*1.8 + 32) + '°F</h2></p>';
 
-    });
-    currentWeather.fail(function(){
-    	console.log('500, Error connecting to openweathermap API');
-    });
+					var icon = '<img src="http://openweathermap.org/img/w/' + element.weather[0].icon + '.png">';
+					//dynamic icon png
+			        var humidity = '<p>% Humidity: ' + element.humidity + '<p>';
+			        // humidity percentage
+			        var windSpeed = '<p>Wind Speed: ' + parseInt(mph(element.speed)) + ' MPH <p>';
+			        // wind
+			        var pressure = '<p>Pressure: ' + element.pressure + '<p></div>';
+			        // pressure
+			  
+			        weatherDisplay += bothtTemps + icon + windSpeed + humidity + pressure;
+
+		        	// console.log(weatherDisplay);
+		        	// console.log(weatherToDisplay);
+		    	});
+			    	
+			    	weatherToDisplay.html(weatherDisplay);	
+		});
+
+			weatherForecast.fail(function(){
+		   		console.log('500, Error connecting to openweathermap API');
+			    	});
+	
 })();
+
+
+
+
+// ONE DAY WEATHER START
+
+// (function() {
+//     var weatherDisplay = $('#weather');
+//     var weatherHtml = '';
+
+//     var currentWeather = $.ajax('http://api.openweathermap.org/data/2.5/weather?q=San+Antonio,TX');
+
+//     currentWeather.done(function(data) {
+// 	    console.log(data);
+
+// 	        // simple weather jazz plugin per Keenan
+// 	        // sign up for API for OpenWeatherMap
+// 	        // For Forecast
+// 	        // high temp in F
+// 	        // low temp in F
+
+// 			var currentTemp = '<p>Current Temp: ' + parseInt((data.main.temp - 273.15)*1.8 + 32) + '°F</p>';
+// 			// current temp in F
+// 			var icon = '<img src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png">';
+// 			//dynamic icon png
+// 	        var humidity = '<p>Humidity %: ' + data.main.humidity + '<p>';
+// 	        // humidity percentage
+// 	        var windSpeed = '<p>Wind Speed: ' + data.wind.speed + '<p>';
+// 	        // wind
+// 	        var pressure = '<p>Pressure: ' + data.main.pressure + '<p>';
+// 	        // pressure
+// 	        var weatherToDisplay = currentTemp + icon + windSpeed + humidity + pressure;
+
+//         $('#weather').html(weatherToDisplay);
+
+//     });
+//     currentWeather.fail(function(){
+//     	console.log('500, Error connecting to openweathermap API');
+//     });
+// })();
+
+// ONE DAY WEATHER END
 </script>
 
-</body>
+	</body>
+
 </html>
