@@ -43,15 +43,14 @@
 		    		<div id="weather"></div>
 		    	</div>
 		</div>
-<!-- <br> -->
+
 		<div id="map-canvas"></div>
 	
 <script>
 
 (function() {
-    var weatherToDisplay = $('#weather');
     
-
+    var weatherToDisplay = $('#weather');
     var weatherForecast = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat=29.423017&lon=-98.48527&cnt=3&mode=json');
 
 	    function getWeatherInformation(data) {
@@ -59,19 +58,25 @@
 
 		    	var cityName = $('#city');
 		    	var weatherDisplay = '';
+		    	// var elementTemp = element.temp
 
 			    $(data.list).each(function(index, element){
+
 
 			    	var mph = function(speed){
     				// console.log(mph);
     				return element.speed * 2.23694;
-    				}
+    				};
 
-			    	// console.log("This is the index: " + index + "This is the element: " + element)
+    				// var farenheit = function(kelvin) {
+				// return 
+    				// };
 
+
+			    	console.log("This is the index: " + index + "This is the element: " + element);
 			    	// var dayOfTheWeek = '<p>' + element.dt + '<p>';
 
-					var bothtTemps = '<div class="col-md-4"><h2> <p>' + parseInt((element.temp.max - 273.15)*1.8 + 32) + "°/" 
+					var bothtTemps = '<div class="col-md-4"><h2> <p>' + parseInt((element.temp.max - 273.15) * 1.8 + 32) + "°/" 
 						+ parseInt((element.temp.min - 273.15)*1.8 + 32) + '°F</h2></p>';
 
 					var icon = '<img src="http://openweathermap.org/img/w/' + element.weather[0].icon + '.png">';
@@ -99,64 +104,57 @@
 
 
 // INSERTED MAP FROM GOOGLE MAPS API EXERCISE
+		// var address = '110 E. Pecan, San Antonio, TX, 78205';
+	 //    var geocoder = new google.maps.Geocoder();
 
-	var address = '110 E. Pecan, San Antonio, TX, 78205';
-
-    var geocoder = new google.maps.Geocoder();
-
-    geocoder.geocode( { 'address': address}, function(results, status) {
-  	
-  	// Check for a successful result
-  	if (status == google.maps.GeocoderStatus.OK) {
-  		} else {
-    // Show an error message with the status if our request fails
-    alert("Geocoding was not successful - STATUS: " + status);
-	  }
-  });
-    
-    // Set our map options
-    var mapOptions = {
-      // This sets the center of the map at our location
-      // center: results[0].geometry.location,
-      center: { lat: 29.424122, lng: -98.493628 },
-      // Set the zoom level
-      zoom: 10,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-	
-      };
+	 //    geocoder.geocode( { 'address': address}, function(results, status) {
+	  	
+  // 			// Check for a successful result
+		//   	if (status == google.maps.GeocoderStatus.OK) {
+		//   		} else {
+		//     // Show an error message with the status if our request fails
+		//     alert("Geocoding was not successful - STATUS: " + status);
+		// 	  }
+	 //  	});
+	    
+// SET OUR MAP OPTIONS OBJECT
+	    var mapOptions = {
+				// center: results[0].geometry.location,
+		      // This sets the center of the map at our location
+  		  // center: { lat: 29.531563, lng: -98.522059 },
+  		  center: { lat: 29.424122, lng: -98.493628 },
+	      zoom: 10,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP,
+		};
 
    	
 // Render the map
-    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+    	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
    
-  	// Create lat and long for our marker position
-    // var vivaPho = { lat: 29.531563, lng: -98.522059 };
+			  	// LAT LNG FOR MARKER POSITION
+			    // var vivaPho = { lat: 29.531563, lng: -98.522059 };
+	    		// IMAGE FOR MARKER
+	    		// var image = "/img/pho.png"
 
-    //Image for marker
-    // var image = "/img/pho.png"
+// ADD THE MARKER TO OUR EXISTING MAP
+	  	var marker = new google.maps.Marker({
+	      position: mapOptions.center,
+	      draggable: true,
+	      animation: google.maps.Animation.DROP,
+	      map: map,
+		      // icon: image,
+		      // animation: google.maps.Animation.DROP,
+	    });
 
-    // ADD THE MARKER TO OUR EXISTING MAP
-  	
-  	var marker = new google.maps.Marker({
-      position: mapOptions.center,
-      draggable: true,
-      animation: google.maps.Animation.DROP,
-      map: map,
-      // icon: image,
-      // animation: google.maps.Animation.DROP,
-
-    });
-
-  	var satx = { lat: 29.424122, lng: -98.493628 }
-
-  	var weather;
-  	// var getWeatherInformation = '';
+	  	var satx = { lat: 29.424122, lng: -98.493628 }
+	  	var weather;
+  				// var getWeatherInformation = '';
 
   	weather = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat='
   		+ satx.lat 
   		+ '&lon=' 
   		+ satx.lng
-  		+ '&cnt=3&mode=json&units=metric');
+  		+ '&cnt=3&mode=json');
 
   		weather.done(getWeatherInformation);
 
@@ -174,40 +172,36 @@
   		+ this.getPosition().lat() 
   		+ '&lon=' 
   		+ this.getPosition().lng()
-  		+ '&cnt=3&mode=json&units=metric');
+  		+ '&cnt=3&mode=json');
 
   		weather.done(getWeatherInformation);
   	});
 
-  	// var weather = $('weather');
+					  	// var weather = $('weather');
 
-  	// function getWeatherInformation(data) {
-  	// 	console.log(data);
-  	// 	var weatherHtml = '';
-  		
-  	// 	var city = data.city.name;
-  	// 	weatherHtml += '<h2>' + city + '</h2>';
-  		
-  	// 	for (var i=0, data.list.length, i++)
-  	// 	var date = data.list[i].dt;
+					  	// function getWeatherInformation(data) {
+					  	// 	console.log(data);
+					  	// 	var weatherHtml = '';
+					  	// 	var city = data.city.name;
+					  	// 	weatherHtml += '<h2>' + city + '</h2>';	
+					  	// 	for (var i=0, data.list.length, i++)
+					  	// 	var date = data.list[i].dt;
+					  	// }
+					  	// WINDOW
 
-
-  	// }
-
-  	// WINDOW
-	// Create a new infoWindow object with content
+// Create a new infoWindow object with content
 	var infowindow = new google.maps.InfoWindow({
     content: 'Drag to get new Forecast'
 	});
 
-// Open the window using our map and marker
-infowindow.open(map,marker);
+// OPEN THE WINDOW USING OUR MAP AND MARKER
+	infowindow.open(map,marker);
 
-
+})();
 
 // END OF MAP FROM GOOGLE MAPS API EXERCISE
 
-})();
+
 
 
 
