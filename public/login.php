@@ -1,22 +1,32 @@
 <?php
 
+require 'functions.php';
 session_start();
+
 $sessionId = session_id();
 
-$username = isset($_POST['username']) ? $_POST['username'] : '';
-$password = isset($_POST['password']) ? $_POST['password'] : '';
+
+$username = inputHas('username') ? inputGet('username') : '';
+$password = inputHas('password') ? inputGet('password') : '';
+
 
 if ($username == 'guest' && $password == 'password'){
 	$_SESSION['LOGGED_IN_USER'] = $username;
 	header('Location:authorize.php');
 }
 
-if (isset($_SESSION['LOGGED_IN_USER'])){
+
+if (inputHas('LOGGED_IN_USER'))
+                    // if (isset($_SESSION['LOGGED_IN_USER']))
+    {
     header('Location:authorize.php');
     }
 ?>
 <? var_dump($sessionId);?>
 <? var_dump($_POST);?>
+
+
+
 
 <html>
 <head>
@@ -34,9 +44,6 @@ if (isset($_SESSION['LOGGED_IN_USER'])){
 		<input type='password' name='password'>
 
 		<input type="submit">
-
-		<!-- <input type="hidden" name="reset" value="reset">
-        <input type="submit" value="Reset Counter"> -->
 
 	</form>
 

@@ -1,33 +1,58 @@
 <?php 
 
-function pageController()
+// function pageController()
+// {
+// 	$data = [];
+
+// 	if(empty($_GET['counter'])){
+// 		$data ['counter'] = 0;
+// 		$data ['message'] = "Game on";
+	
+// 	} else {
+
+// 		if($_GET['result'] == 'miss') {
+// 			$data['counter'] = 0;
+// 			$data['message'] = "Game Over";
+// 		}
+
+// 		if($_GET['result'] == 'hit') {
+// 			$data ['counter'] = $_GET['counter'];
+// 			$data['message'] = "Game is in progress";
+// 		}
+// 	}
+
+// 	// $data['counter'] = $counter;
+// 	return $data;
+// }
+
+// extract(pageController());
+ 
+require 'functions.php';
+
+function pageController2()
 {
 	$data = [];
 
-	if(empty($_GET['counter'])){
-		$data ['counter'] = 0;
-		$data ['message'] = "Game on";
+	if(inputGet("val") == false)
+	{
+		$data['count'] = 0;
 	
-	} else {
-
-		if($_GET['result'] == 'miss') {
-			$data['counter'] = 0;
-			$data['message'] = "Game Over";
-		}
-
-		if($_GET['result'] == 'hit') {
-			$data ['counter'] = $_GET['counter'];
-			$data['message'] = "Game is in progress";
-		}
-
+	} else if (inputGet("val") == 'miss')
+	{
+		echo 'Game Over';
+		$data['count'] = 0;
+	
+	} elseif (inputGet("val") == 'hit')
+	{
+		$data['count'] = inputGet('count');
 	}
 
-	// $data['counter'] = $counter;
 	return $data;
 }
 
-extract(pageController());
- 
+extract(pageController2());
+
+
 ?>
 
 <html>
@@ -38,7 +63,7 @@ extract(pageController());
 		body {
 			background-image: url("pong.jpeg");
 			}
-		#counter {
+		#count {
 			font-size: 400px;
 			color: white;
 			/*border-width: 20px solid;*/
@@ -50,10 +75,10 @@ extract(pageController());
 </head>
 <body>
 
-	<h1 id='counter'><?= $counter; ?></h1>
+	<h1 id='count'><?= $count; ?></h1>
 
-	<a href="ping.php?result=hit&counter=<?= $counter+1; ?> ">Hit</a>
-	<a href="ping.php?result=miss">Miss</a>
+	<a href="ping.php?val=hit&count=<?= $count+1; ?> ">Hit</a>
+	<a href="ping.php?val=miss">Miss</a>
 
 </body>
 </html>
