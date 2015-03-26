@@ -27,24 +27,24 @@
 
 // extract(pageController());
  
-require 'functions.php';
+require '../Input.php';
 
 function pageController2()
 {
 	$data = [];
 
-	if(inputGet("val") == false)
+	if(Input::get("val") == false)
 	{
 		$data['count'] = 0;
 	
-	} else if (inputGet("val") == 'miss')
+	} else if (Input::get("val") == 'miss')
 	{
 		echo 'Game Over';
 		$data['count'] = 0;
 	
-	} elseif (inputGet("val") == 'hit')
+	} elseif (Input::get("val") == 'hit')
 	{
-		$data['count'] = inputGet('count');
+		$data['count'] = Input::get('count');
 	}
 
 	return $data;
