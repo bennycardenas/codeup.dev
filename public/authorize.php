@@ -18,7 +18,7 @@ if(!isset($_SESSION['LOGGED_IN_USER'])){
 
 if(Auth::check()){
 	$username = Auth::user();
-	echo "Welcome, $username";
+	// echo "Welcome, $username";
 } else {
 	header("Location: login.php");
 	exit();

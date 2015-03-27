@@ -1,30 +1,24 @@
 <?php
 
 require 'functions.php';
-require '../Auth.php';
+require_once '../Auth.php';
+require_once '../Input.php';
+
 
 session_start();
 
 $sessionId = session_id();
 
-if(Auth::check())
-    {
+if(Auth::check()){
     header('Location:authorize.php');
     exit();
-    }
+}
 
-$username = inputHas('username') ? inputGet('username') : '';
-$password = inputHas('password') ? inputGet('password') : '';
+$message = "Please Log In.";
 
+if(Input::has('username') && Input::has('password')){
+    $message = Auth::attempt(Input::get('username'), Input::get('password'));
 
-if ($_POST){
-	Auth::attempt($username, $password);
-	if(isset($_SESSION['LOGGED_IN_USER'])) {
-        header('Location:authorize.php');
-        exit();
-    } else {
-        echo 'Wrong Username or Password';
-    }
 }
 
 
@@ -45,6 +39,8 @@ if (inputHas('LOGGED_IN_USER'))
 
 <body>
 	
+    <h1><?php echo $message?></h1>
+
 	<form method='post' action='login.php'>
 
 		<label for='username'>Username</label>

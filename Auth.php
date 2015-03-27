@@ -15,9 +15,11 @@ class Auth
             $_SESSION['LOGGED_IN_USER'] = $username;
             $newLog = new Log;
             $newLog->info("User {$username} logged in");
+            return "User {$username} logged in";
         } else {
             $newLog = new Log;
             $newLog->error("{$username} failed to log in");
+            return 'Wrong Username or Password';
         }
     }
 

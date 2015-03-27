@@ -23,3 +23,24 @@ Error: a;lksdfj;aslkj failed to log in
 Error: guest failed to log in
 Info: User guest logged in
 Error: ;ajdf;ajhf failed to log in
+Error: ;asdjf;asjfd failed to log in
+Error:  failed to log in
+Error: a;sdjf;afj failed to log in
+Error:  failed to log in
+Info: User guest logged in
+Error:  failed to log in
+Error: ajhdf;ajhdf; failed to log in
+Error:  failed to log in
+Error: guest failed to log in
+Error:  failed to log in
+Info: User guest logged in
+Error:  failed to log in
+Error: ;lkadjf;lakjdf failed to log in
+Error:  failed to log in
+Error: padlkajhdf failed to log in
+Info: User guest logged in
+Error: asdf;alkj failed to log in
+Error: a;lsfj;aj failed to log in
+Error: guest failed to log in
+Info: User guest logged in
+Info: User guest logged in
