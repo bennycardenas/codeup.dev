@@ -1,0 +1,1 @@
+drop table at the top of migration
