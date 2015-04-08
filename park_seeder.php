@@ -5,6 +5,8 @@ require 'db_connect.php';
 
 $dbc->exec('TRUNCATE national_parks');
 
+$query = "INSERT INTO national_parks (Name, Location, Date_Established, Area_in_Acres, Description)
+            VALUES (:name, :location, :date_established, :area_in_acres, :description)";
 
 $parks = [
 
@@ -26,30 +28,23 @@ $parks = [
 
 ];
 
-foreach ($parks as $park) {
-    
-    $query = "INSERT INTO national_parks (Name, Location, Date_Established, Area_in_Acres)
-    VALUES  ('{$park['name']}', '{$park['location']}','{$park['Date_Established']}', '{$park['Area_in_Acres']}')";
+// $dbc->exec($query);  IS NOW THE FOLLOWING LINE:
+$stmt = $dbc->prepare($query);
 
-    $dbc->exec($query);
 
-}
 
-// VALUES 
-//         ('Acadia', 'Maine', 02-26-1919, 47389.67),
-//         ('American Samoa', 'American Samoa', 10-31-1988, 76518.98),
-//         ('Arches', 'Utah', 04-12-1929, 76518.98),
-//         ('Badlands', 'South Dakota', 11-10-1978, 242755.94),
-//         ('Big Bend', 'Texas', 06-12-1944, 801163.21),
-//         ('Biscayne', 'Florida', 06-28-1980, 801163.21),
-//         ('Black Canyon', 'Colorado', 10-21-1999, 32950.03),
-//         ('Bryce Canyon', 'Utah', 02-25-1928, 35835.08),
-//         ('Canyonlands', 'Utah', 09-12-1964, 337597.83),
-//         ('Capitol Reef', 'Utah', 12-18-1971, 241904.26),
-//         ('Carlsbad Caverns', 'New Mexico', 05-14-1930, 46766.45),
-//         ('Channel Islands', 'California', 03-05-1980, 249561.00),
-//         ('Congaree', 'South Carolina', 11-10-2003, 26545.86),
-//         ('Crater Lake', 'Oregon', 05-22-1902, 183224.05),
-//         ('Cuyahoga Valley', 'Ohio', 10-11-2000, 32860.73);
+
+foreach ($parks as $park) 
+    {
+        $stmt->bindValue(':name', $park['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':location', $park['location'], PDO::PARAM_STR);
+        $stmt->bindValue(':date_established', $park['Date_Established'], PDO::PARAM_STR);
+        $stmt->bindValue(':area_in_acres', $park['Area_in_Acres'], PDO::PARAM_STR);
+        $stmt->bindValue(':description', $park['Description'], PDO::PARAM_STR);
+    }
+
+prepare
+bindValue
+execute
         
 ?>

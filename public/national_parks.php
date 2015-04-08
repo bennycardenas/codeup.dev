@@ -9,11 +9,9 @@ require '../db_connect.php';
     } else {
         $current_page = 1;
     }
+    // The following construct is a PHP hack for the ELSE portion of the statement
+    // else $current_page = 1;
 
-    // if ($_GET['page'])
-
-    
-    
 
     function getParks($dbc, $offset=0)
     {
@@ -23,11 +21,12 @@ require '../db_connect.php';
     $offset = ($current_page - 1) * 4;
     $parks = getParks($dbc, $offset);
 
-    $num_parks = $dbc->query('SELECT * FROM national_parks')->fetchColumn();
+    $num_parks = $dbc->query('SELECT count(*) FROM national_parks')->fetchColumn();
     $total = ceil($num_parks/4);
 
-    // The following construct is a PHP hack for the ELSE portion of the statement
-    // else $current_page = 1;
+    if ($current_page > $total){
+        header('Location: /national_parks.php');
+    }
 ?>
 <html>
     <head>
@@ -42,7 +41,7 @@ require '../db_connect.php';
         }
     </style>
     <body>
-        <?php echo $current_page ?>
+        <!-- <?php echo $current_page ?> -->
         <div id='main'>
             <!-- <table class="table table-striped"> -->
             <table class="table table-nonfluid">
@@ -57,20 +56,6 @@ require '../db_connect.php';
                     </tr>
                 </thead>
 
-                <?php
-                if($current_page > 1){
-                echo "<a href='?page=".($current_page-1)." '>Previous</a> ";
-                }
-
-                if($current_page < 1){
-                echo "<a href='?page=".($current_page-1)." '>Next</a> ";
-                }
-
-                
-
-
-                ?>
-
                 <?php foreach($parks as $park): ?>
                     <tr>
                         <td><?php echo $park['Name']; ?></td>
@@ -80,15 +65,29 @@ require '../db_connect.php';
                     </tr>    
                 <?php endforeach; ?>
             </table>
-            
-            <!-- <a href="national_parks.php?page=<?= $current_page - 1 ?>">Previous</a> -->
+            <div id="pages">
+                <?php
 
+                    if($current_page > 1)
+                    {
+                    echo "<a href='?page=".($current_page-1)." '>Previous</a> ";
+                    }
 
+                    for ($i=1; $i<=$total; $i++)
+                        
+                        if($i == $current_page)
+                        {
+                            echo $i;
+                        } else {
+                            echo "<a href='?page=".($i)." '>".$i."</a>";
+                        }
 
-
-            <a href="national_parks.php?page=<?= $current_page + 1 ?>">Next</a>
-
+                    if($current_page < $total)
+                    {
+                    echo "<a href='?page=".($current_page+1)." '>Next</a> ";
+                    } 
+                ?>
+            </div>
         </div>
     </body>
 </html>
-
