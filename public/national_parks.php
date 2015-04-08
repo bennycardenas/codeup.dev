@@ -10,6 +10,10 @@ require '../db_connect.php';
         $current_page = 1;
     }
 
+    // if ($_GET['page'])
+
+    
+    
 
     function getParks($dbc, $offset=0)
     {
@@ -18,6 +22,9 @@ require '../db_connect.php';
 
     $offset = ($current_page - 1) * 4;
     $parks = getParks($dbc, $offset);
+
+    $num_parks = $dbc->query('SELECT * FROM national_parks')->fetchColumn();
+    $total = ceil($num_parks/4);
 
     // The following construct is a PHP hack for the ELSE portion of the statement
     // else $current_page = 1;
@@ -50,6 +57,20 @@ require '../db_connect.php';
                     </tr>
                 </thead>
 
+                <?php
+                if($current_page > 1){
+                echo "<a href='?page=".($current_page-1)." '>Previous</a> ";
+                }
+
+                if($current_page < 1){
+                echo "<a href='?page=".($current_page-1)." '>Next</a> ";
+                }
+
+                
+
+
+                ?>
+
                 <?php foreach($parks as $park): ?>
                     <tr>
                         <td><?php echo $park['Name']; ?></td>
@@ -60,7 +81,7 @@ require '../db_connect.php';
                 <?php endforeach; ?>
             </table>
             
-            <a href="national_parks.php?page=<?= $current_page - 1 ?>">Previous</a>
+            <!-- <a href="national_parks.php?page=<?= $current_page - 1 ?>">Previous</a> -->
 
 
 
