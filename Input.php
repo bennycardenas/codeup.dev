@@ -15,7 +15,6 @@ class Input
             {
                 return true;
             }
-        
                 return false;
     }  
     

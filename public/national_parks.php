@@ -2,6 +2,7 @@
 
 require '../parks_login.php';   
 require '../db_connect.php';
+require '../input.php';
 
     // This determines what page the application is on for pagination purposes
     if (!empty($_GET['page'])) {
@@ -13,20 +14,70 @@ require '../db_connect.php';
     // else $current_page = 1;
 
 
-    function getParks($dbc, $offset=0)
-    {
-        return $dbc->query("SELECT * FROM national_parks LIMIT 4 OFFSET $offset")->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $offset = 0;
+    $limit = 4;
 
-    $offset = ($current_page - 1) * 4;
-    $parks = getParks($dbc, $offset);
+
+    $offset = ($current_page - 1) * $limit;
+    
+    $query = "SELECT * FROM national_parks LIMIT :limit OFFSET :offset";
+    $stmt = $dbc->prepare($query);
+    
+    $stmt->bindValue(':limit', $limit , PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset , PDO::PARAM_INT);
+    $stmt->execute();
+
+    $parks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
     $num_parks = $dbc->query('SELECT count(*) FROM national_parks')->fetchColumn();
-    $total = ceil($num_parks/4);
+    $total = ceil($num_parks/$limit);
+
 
     if ($current_page > $total){
         header('Location: /national_parks.php');
     }
+
+    //-----------------------------------------------
+    //Form INSERT request as follows
+
+    if(!empty($_POST)){
+
+        if (empty($_POST['parkname'])) {
+            echo 'Please enter a name';
+        } elseif (empty($_POST['location'])) {
+            echo 'Please enter a location';
+        } elseif (empty($_POST['date'])) {
+            echo 'Please enter a date';
+        } elseif (empty($_POST['area'])) {
+            echo 'Please enter an area';
+        }elseif (empty($_POST['description'])) {
+            echo 'Please enter an area';
+        } else {
+    
+
+        $query = "INSERT INTO national_parks (Name, Location, Date_Established, Area_in_Acres, Description)
+                VALUES (:name, :location, :date_established, :area_in_acres, :description)";
+
+        $name = Input::get('parkname');
+        $location = Input::get('location');
+        $date = Input::get('date');
+        $area = Input::get('area');
+        $description = Input::get('description');
+
+        $stmt->bindValue(':name', $park['parkname'], PDO::PARAM_STR);
+        $stmt->bindValue(':location', $park['location'], PDO::PARAM_STR);
+        $stmt->bindValue(':date', $park['date'], PDO::PARAM_STR);
+        $stmt->bindValue(':area', $park['area'], PDO::PARAM_STR);
+        $stmt->bindValue(':description', $park['description'], PDO::PARAM_STR);
+
+        $stmt->execute();
+        }
+
+    };
+
+var_dump($park);
+
 ?>
 <html>
     <head>
@@ -39,55 +90,143 @@ require '../db_connect.php';
             width: auto !important;
             /*text-align: center;*/
         }
+
+        #main{
+            width: 600px;
+            height: 750px;
+            /*border: 1px solid;*/
+            margin-right: auto;
+            margin-left: auto;
+            padding-top: 50px;
+        }
+
+        #top {
+            width: 700px;
+            height: 250px;
+            /*border: 1px solid;*/
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        #footer {
+            text-align: center;
+           /* position: relative;*/
+            /*border: 1px solid;*/
+            width: 700px;
+            height: 80px;
+            margin-right: auto;
+            margin-left: auto;
+            font-size: 15px;
+            /*padding-left: 50%;*/
+        }
+
+        #pages {
+            /*border: 1px solid;*/
+            width: 160px;
+            height: 50px;
+            text-align: center;
+            margin-right: auto;
+            position: relative;
+        }
+
+        #form {
+            /*border: 1px solid;*/
+            width: 700px;
+            text-align: left;
+            margin-right: auto;
+            margin-left: auto;
+            ali
+
+        }
+
     </style>
     <body>
         <!-- <?php echo $current_page ?> -->
         <div id='main'>
-            <!-- <table class="table table-striped"> -->
-            <table class="table table-nonfluid">
-                <br>
+            <div id='top'>
+                <table class="table table-nonfluid table-striped">
+                    
 
-                <thead>
-                    <tr>
-                        <th>Park Name</th>
-                        <th>Location</th>
-                        <th>Date Established</th>
-                        <th>Area in Acres</th>  
-                    </tr>
-                </thead>
+                    <thead>
+                        <tr>
+                            <th>Park Name</th>
+                            <th>Location</th>
+                            <th>Date Established</th>
+                            <th>Area in Acres</th>
+                            <th>Description</th>  
+                        </tr>
+                    </thead>
 
-                <?php foreach($parks as $park): ?>
-                    <tr>
-                        <td><?php echo $park['Name']; ?></td>
-                        <td><?php echo $park['Location']; ?></td>
-                        <td><?php echo $park['Date_Established']; ?></td>
-                        <td><?php echo $park['Area_in_Acres']; ?></td>
-                    </tr>    
-                <?php endforeach; ?>
-            </table>
-            <div id="pages">
-                <?php
-
-                    if($current_page > 1)
-                    {
-                    echo "<a href='?page=".($current_page-1)." '>Previous</a> ";
-                    }
-
-                    for ($i=1; $i<=$total; $i++)
-                        
-                        if($i == $current_page)
-                        {
-                            echo $i;
-                        } else {
-                            echo "<a href='?page=".($i)." '>".$i."</a>";
-                        }
-
-                    if($current_page < $total)
-                    {
-                    echo "<a href='?page=".($current_page+1)." '>Next</a> ";
-                    } 
-                ?>
+                    <?php foreach($parks as $park): ?>
+                        <tr>
+                            <td><?php echo $park['Name']; ?></td>
+                            <td><?php echo $park['Location']; ?></td>
+                            <td><?php echo $park['Date_Established']; ?></td>
+                            <td><?php echo $park['Area_in_Acres']; ?></td>
+                            <td><?php echo $park['Description']; ?></td>
+                        </tr>    
+                    <?php endforeach; ?>
+                </table>
             </div>
+
+            <div id="footer">
+                <div class="container">
+
+                    <div id="pages">
+                        <?php
+
+                            if($current_page > 1)
+                            {
+                            echo "<a href='?page=".($current_page-1)." '>Previous  </a> ";
+                            }
+
+                            for ($i=1; $i<=$total; $i++)
+                                
+                                if($i == $current_page)
+                                {
+                                    echo $i;
+                                } else {
+                                    echo "<a href='?page=".($i)." '>"." " .$i." "."</a>";
+                                }
+
+                            if($current_page < $total)
+                            {
+                            echo "<a href='?page=".($current_page+1)." '>  Next</a> ";
+                            } 
+                        ?>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="form"> 
+                <strong>Want to add a Park?</strong>
+                <form method="POST" action="/national_parks.php">
+                    <p>
+                        <label for="parkname" ></label>
+                        <input id="parkname" name="parkname" type="text" placeholder="Park Name">
+                    </p>
+                    <p>
+                        <label for="location">   </label>
+                        <input id="location" name="location" type="text" placeholder="Location">
+                    </p>
+                    <p>
+                        <label for="date">   </label>
+                        <input id="date" name="date" placeholder="Date Established">
+                    </p>
+                    <p>
+                        <label for="area">   </label>
+                        <input id="area" name="area" placeholder="Area in Acres">
+                    </p>
+                    <p>
+                        <textarea id="description" name="description" rows="5" cols="40" placeholder="Description"></textarea>
+                    </p>
+                    <p>
+                        <input type="submit">
+                    </p>
+                </form>
+            </div>
+
         </div>
     </body>
 </html>
