@@ -19,7 +19,7 @@ $parks = [
     ['name'=>'Black Canyon', 'location'=>'Colorado', 'Date_Established'=>'1999-10-21', 'Area_in_Acres'=>32950.03],
     ['name'=>'Bryce Canyon', 'location'=>'Utah', 'Date_Established'=>'1928-02-25', 'Area_in_Acres'=>35835.08],
     ['name'=>'Canyonlands', 'location'=>'Utah', 'Date_Established'=>'1964-09-12', 'Area_in_Acres'=>337597.83],
-    ['name'=>'Capitol Reef', 'location'=>'Utah', 'Date_Established'=>'1971-12-18', 'Area_in_Acres'=>241904.26],
+    ['name'=>'Capitol Reef', 'location'=>'Utah', 'Date_Established'=>'1971-12-18', 'Area_in_Acres'=>241904.26, 'Description'=>'Never Been There'],
     ['name'=>'Carlsbad Caverns', 'location'=>'New Mexico', 'Date_Established'=>'1930-05-14', 'Area_in_Acres'=>46766.45],
     ['name'=>'Channel Islands', 'location'=>'California', 'Date_Established'=>'1980-03-05', 'Area_in_Acres'=>249561.00],
     ['name'=>'Congaree', 'location'=>'South Carolina', 'Date_Established'=>'2003-11-10', 'Area_in_Acres'=>26545.86],
