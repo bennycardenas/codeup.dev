@@ -10,11 +10,11 @@ $dbc->exec('DROP TABLE IF EXISTS national_parks');
 
 $query = 'CREATE TABLE national_parks (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    Name VARCHAR(100) NOT NULL,
-    Location VARCHAR(100) NOT NULL,
-    Date_Established DATE NOT NULL,
-    Area_in_Acres DOUBLE NOT NULL,
-    Description TEXT,
+    name VARCHAR(100) NOT NULL,
+    location VARCHAR(100) NOT NULL,
+    date_established DATE NOT NULL,
+    area_in_acres DOUBLE NOT NULL,
+    description TEXT,
     PRIMARY KEY (id)
 )';
 

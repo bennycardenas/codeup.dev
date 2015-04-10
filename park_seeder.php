@@ -25,7 +25,7 @@ $parks = [
 
 ];
 
-$query = "INSERT INTO national_parks (Name, Location, Date_Established, Area_in_Acres, Description)
+$query = "INSERT INTO national_parks (name, location, date_established, area_in_acres, description)
             VALUES (:name, :location, :date_established, :area_in_acres, :description)";
 
 // $dbc->exec($query);  IS NOW THE FOLLOWING LINE:

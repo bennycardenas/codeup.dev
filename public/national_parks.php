@@ -4,6 +4,9 @@ require '../parks_login.php';
 require '../db_connect.php';
 require '../input.php';
 
+// var_dump($_REQUEST);
+// var_dump($_POST);
+
     // This determines what page the application is on for pagination purposes
     if (!empty($_GET['page'])) {
         $current_page = $_GET['page'];
@@ -31,8 +34,8 @@ require '../input.php';
 
 
     $num_parks = $dbc->query('SELECT count(*) FROM national_parks')->fetchColumn();
+    
     $total = ceil($num_parks/$limit);
-
 
     if ($current_page > $total){
         header('Location: /national_parks.php');
@@ -41,42 +44,48 @@ require '../input.php';
     //-----------------------------------------------
     //Form INSERT request as follows
 
-    if(!empty($_POST)){
-
-        if (empty($_POST['parkname'])) {
-            echo 'Please enter a name';
-        } elseif (empty($_POST['location'])) {
-            echo 'Please enter a location';
-        } elseif (empty($_POST['date'])) {
-            echo 'Please enter a date';
-        } elseif (empty($_POST['area'])) {
-            echo 'Please enter an area';
-        }elseif (empty($_POST['description'])) {
-            echo 'Please enter an area';
-        } else {
+    if ( (!empty($_POST['parkname'])) && (!empty($_POST['location'])) && (!empty($_POST['date_established'])) && (!empty($_POST['area']))
+        && (!empty($_POST['description'])) )
     
+    {
+        // echo "Inside if statement";
 
-        $query = "INSERT INTO national_parks (Name, Location, Date_Established, Area_in_Acres, Description)
-                VALUES (:name, :location, :date_established, :area_in_acres, :description)";
+        $query = "INSERT INTO national_parks (name, location, date_established, area_in_acres, description)
+            VALUES (:parkname, :location, :date_established, :area, :description)";
 
-        $name = Input::get('parkname');
-        $location = Input::get('location');
-        $date = Input::get('date');
-        $area = Input::get('area');
-        $description = Input::get('description');
+        // $name = Input::get('parkname');
+        // $location = Input::get('location');
+        // $date = Input::get('date');
+        // $area = Input::get('area');
+        // $description = Input::get('description');
 
-        $stmt->bindValue(':name', $park['parkname'], PDO::PARAM_STR);
-        $stmt->bindValue(':location', $park['location'], PDO::PARAM_STR);
-        $stmt->bindValue(':date', $park['date'], PDO::PARAM_STR);
-        $stmt->bindValue(':area', $park['area'], PDO::PARAM_STR);
-        $stmt->bindValue(':description', $park['description'], PDO::PARAM_STR);
+        $stmt = $dbc->prepare($query);
+
+        $stmt->bindValue(':parkname', $_POST['parkname'], PDO::PARAM_STR);
+        $stmt->bindValue(':location', $_POST['location'], PDO::PARAM_STR);
+        $stmt->bindValue(':date_established', $_POST['date_established'], PDO::PARAM_STR);
+        $stmt->bindValue(':area', $_POST['area'], PDO::PARAM_STR);
+        $stmt->bindValue(':description', $_POST['description'], PDO::PARAM_STR);
 
         $stmt->execute();
+        
+        // POST !EMPTY IS TRUE AS LONG AS THE FORM IS SUBMITTED
+    } elseif (!empty($_POST)) {
+                echo "inside elseif ...\n";
+            if (empty($_POST['parkname'])) {
+                echo 'Please enter a name';
+            } elseif (empty($_POST['location'])) {
+                echo 'Please enter a location';
+            } elseif (empty($_POST['date_established'])) {
+                echo 'Please enter a date';
+            } elseif (empty($_POST['area'])) {
+                echo 'Please enter an area';
+            } elseif (empty($_POST['description'])) {
+                echo 'Please enter an area';
+            }
         }
 
-    };
-
-var_dump($park);
+// var_dump($_POST);
 
 ?>
 <html>
@@ -136,11 +145,17 @@ var_dump($park);
             margin-right: auto;
             margin-left: auto;
             ali
-
         }
+
+        /*#canyon {
+            align: center;
+        }*/
 
     </style>
     <body>
+
+        <!-- <img src="/img/canyonlands.jpg" id="canyon"> -->
+
         <!-- <?php echo $current_page ?> -->
         <div id='main'>
             <div id='top'>
@@ -159,11 +174,11 @@ var_dump($park);
 
                     <?php foreach($parks as $park): ?>
                         <tr>
-                            <td><?php echo $park['Name']; ?></td>
-                            <td><?php echo $park['Location']; ?></td>
-                            <td><?php echo $park['Date_Established']; ?></td>
-                            <td><?php echo $park['Area_in_Acres']; ?></td>
-                            <td><?php echo $park['Description']; ?></td>
+                            <td><?php echo $park['name']; ?></td>
+                            <td><?php echo $park['location']; ?></td>
+                            <td><?php echo $park['date_established']; ?></td>
+                            <td><?php echo $park['area_in_acres']; ?></td>
+                            <td><?php echo $park['description']; ?></td>
                         </tr>    
                     <?php endforeach; ?>
                 </table>
@@ -204,18 +219,18 @@ var_dump($park);
                 <form method="POST" action="/national_parks.php">
                     <p>
                         <label for="parkname" ></label>
-                        <input id="parkname" name="parkname" type="text" placeholder="Park Name">
+                        <input id="parkname" name=" " type="text" placeholder="Park Name">
                     </p>
                     <p>
-                        <label for="location">   </label>
+                        <label for="location"></label>
                         <input id="location" name="location" type="text" placeholder="Location">
                     </p>
                     <p>
-                        <label for="date">   </label>
-                        <input id="date" name="date" placeholder="Date Established">
+                        <label for="date"></label>
+                        <input id="date" name="date_established" placeholder="Date Established">
                     </p>
                     <p>
-                        <label for="area">   </label>
+                        <label for="area"></label>
                         <input id="area" name="area" placeholder="Area in Acres">
                     </p>
                     <p>
