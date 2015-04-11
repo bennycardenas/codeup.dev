@@ -2,7 +2,7 @@
 
 require '../parks_login.php';   
 require '../db_connect.php';
-require '../input.php';
+// require '../input.php';
 
 // var_dump($_REQUEST);
 // var_dump($_POST);
@@ -15,14 +15,17 @@ require '../input.php';
     }
     // The following construct is a PHP hack for the ELSE portion of the statement
     // else $current_page = 1;
-
-
+    
     $offset = 0;
     $limit = 4;
 
-
     $offset = ($current_page - 1) * $limit;
     
+    if  (  (!is_numeric($current_page))  || ($current_page < 1) ) 
+    {
+        header('Location: /national_parks.php');
+    }
+
     $query = "SELECT * FROM national_parks LIMIT :limit OFFSET :offset";
     $stmt = $dbc->prepare($query);
     
@@ -31,18 +34,19 @@ require '../input.php';
     $stmt->execute();
 
     $parks = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
     $num_parks = $dbc->query('SELECT count(*) FROM national_parks')->fetchColumn();
-    
+        
     $total = ceil($num_parks/$limit);
 
-    if ($current_page > $total){
+    if ($current_page > $total)
+    {
         header('Location: /national_parks.php');
     }
 
+    
+
     //-----------------------------------------------
-    //Form INSERT request as follows
+    //Form the INSERT request as follows
 
     if ( (!empty($_POST['parkname'])) && (!empty($_POST['location'])) && (!empty($_POST['date_established'])) && (!empty($_POST['area']))
         && (!empty($_POST['description'])) )
