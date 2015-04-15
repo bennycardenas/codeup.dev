@@ -37,6 +37,34 @@ class Input
                 return $default;
     }
 
+    public static function getString($key)
+    {
+        
+        $result = self::get($key);
+
+        if (is_string($result)){
+            return $result;
+        } else if ($result == null) {
+            throw new EXCEPTION("$key does not exist");
+        } else {
+            throw new EXCEPTION("$key must be a string");
+        }
+    }
+
+    public static function getNumber($key)
+    {
+        
+        $result = self::get($key);
+
+        if(is_numeric($result)){
+            return $result;
+        } else if ($result == null) {
+            throw new EXCEPTION("Key does not exist");
+        } else {
+            throw new EXCEPTION("Key must be a number");
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     //                      DO NOT EDIT ANYTHING BELOW!!                     //
     // The Input class should not ever be instantiated, so we prevent the    //
@@ -44,4 +72,5 @@ class Input
     // later in the curriculum.                                              //
     ///////////////////////////////////////////////////////////////////////////
     private function __construct() {}
+
 }

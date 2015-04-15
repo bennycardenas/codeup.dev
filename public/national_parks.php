@@ -1,5 +1,6 @@
 <?php
 
+require_once '../input.php';
 require '../parks_login.php';   
 require '../db_connect.php';
 // require '../input.php';
@@ -47,9 +48,14 @@ require '../db_connect.php';
 
     //-----------------------------------------------
     //Form the INSERT request as follows
-
-    if ( (!empty($_POST['parkname'])) && (!empty($_POST['location'])) && (!empty($_POST['date_established'])) && (!empty($_POST['area']))
-        && (!empty($_POST['description'])) )
+    // echo "parkname: " . isset($_POST['parkname']) . "\n";
+    // echo "location: " . isset($_POST['location']) . "\n";
+    // echo "date: " . isset($_POST['date_established']) . "\n";
+    // echo "area: " . isset($_POST['area']) . "\n";
+    // echo "desc: " . isset($_POST['description']) . "\n";
+    
+    if ( isset($_POST['parkname']) && isset($_POST['location']) && isset($_POST['date_established']) && isset($_POST['area'])
+        && isset($_POST['description']) )
     
     {
         // echo "Inside if statement";
@@ -68,8 +74,10 @@ require '../db_connect.php';
         $stmt->bindValue(':parkname', $_POST['parkname'], PDO::PARAM_STR);
         $stmt->bindValue(':location', $_POST['location'], PDO::PARAM_STR);
         $stmt->bindValue(':date_established', $_POST['date_established'], PDO::PARAM_STR);
-        $stmt->bindValue(':area', $_POST['area'], PDO::PARAM_STR);
+        $stmt->bindValue(':area', Input::getNumber('area'), PDO::PARAM_STR);
         $stmt->bindValue(':description', $_POST['description'], PDO::PARAM_STR);
+
+        // getNumber();
 
         $stmt->execute();
         
@@ -88,6 +96,8 @@ require '../db_connect.php';
                 echo 'Please enter an area';
             }
         }
+
+
 
 // var_dump($_POST);
 
@@ -223,7 +233,7 @@ require '../db_connect.php';
                 <form method="POST" action="/national_parks.php">
                     <p>
                         <label for="parkname" ></label>
-                        <input id="parkname" name=" " type="text" placeholder="Park Name">
+                        <input id="parkname" name="parkname" type="text" placeholder="Park Name">
                     </p>
                     <p>
                         <label for="location"></label>
