@@ -42,24 +42,24 @@ class Input
         
         $result = self::get($key);
 
-        if (is_string($result)){
-            return $result;
+        if (is_string($result) && !is_numeric($result) ){
+            return trim($result);
         } else if ($result == null) {
-            throw new EXCEPTION("$key does not exist");
+            throw new EXCEPTION("The string $key does not exist");
         } else {
-            throw new EXCEPTION("$key must be a string");
+            throw new EXCEPTION("$key must be a non-numeric string");
         }
     }
 
     public static function getNumber($key)
     {
         
-        $result = self::get($key);
+        $result = trim(self::get($key));
 
         if(is_numeric($result)){
             return $result;
         } else if ($result == null) {
-            throw new EXCEPTION("Key does not exist");
+            throw new EXCEPTION("The number $key does not exist");
         } else {
             throw new EXCEPTION("Key must be a number");
         }

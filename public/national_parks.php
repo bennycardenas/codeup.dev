@@ -71,11 +71,11 @@ require '../db_connect.php';
 
         $stmt = $dbc->prepare($query);
 
-        $stmt->bindValue(':parkname', $_POST['parkname'], PDO::PARAM_STR);
-        $stmt->bindValue(':location', $_POST['location'], PDO::PARAM_STR);
+        $stmt->bindValue(':parkname', Input::getString('parkname'), PDO::PARAM_STR);
+        $stmt->bindValue(':location', Input::getString('location'), PDO::PARAM_STR);
         $stmt->bindValue(':date_established', $_POST['date_established'], PDO::PARAM_STR);
         $stmt->bindValue(':area', Input::getNumber('area'), PDO::PARAM_STR);
-        $stmt->bindValue(':description', $_POST['description'], PDO::PARAM_STR);
+        $stmt->bindValue(':description', Input::getString('description'), PDO::PARAM_STR);
 
         // getNumber();
 
