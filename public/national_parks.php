@@ -71,15 +71,53 @@ require '../db_connect.php';
 
         $stmt = $dbc->prepare($query);
 
-        $stmt->bindValue(':parkname', Input::getString('parkname'), PDO::PARAM_STR);
-        $stmt->bindValue(':location', Input::getString('location'), PDO::PARAM_STR);
-        $stmt->bindValue(':date_established', $_POST['date_established'], PDO::PARAM_STR);
-        $stmt->bindValue(':area', Input::getNumber('area'), PDO::PARAM_STR);
-        $stmt->bindValue(':description', Input::getString('description'), PDO::PARAM_STR);
+        $errors = [];
+
+        foreach ($_POST as $key => $value) {
+            
+            try {
+  
+                if ($key == 'area'){
+                    
+                    // echo "in IF of TRY";
+                    $stmt->bindValue(":$key",Input::getNumber($key),PDO::PARAM_STR);
+
+                } else {
+                    
+                    // echo "in ELSE of TRY\n";
+                    $stmt->bindValue(":$key",Input::getString($key),PDO::PARAM_STR);
+
+                }
+
+            } catch (Exception $e) {
+                
+                array_push($errors, $e->getMessage()) ;
+
+            }
+
+
+        }
+        
+        if($errors == []){
+            $stmt->execute();
+        } else {
+
+                foreach ($errors as $error) {
+                    echo $error;
+                }
+        }
+
+        
+
+        // $stmt->bindValue(':parkname',Input::getString('parkname'),PDO::PARAM_STR);
+        // $stmt->bindValue(':location',           Input::getString('location'),       PDO::PARAM_STR);
+        // $stmt->bindValue(':date_established',   $_POST['date_established'],         PDO::PARAM_STR);
+        // $stmt->bindValue(':area',               Input::getNumber('area'),           PDO::PARAM_STR);
+        // $stmt->bindValue(':description',        Input::getString('description'),    PDO::PARAM_STR);
 
         // getNumber();
 
-        $stmt->execute();
+        
         
         // POST !EMPTY IS TRUE AS LONG AS THE FORM IS SUBMITTED
     } elseif (!empty($_POST)) {
