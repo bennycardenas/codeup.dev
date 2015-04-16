@@ -78,24 +78,14 @@ require '../db_connect.php';
             try {
   
                 if ($key == 'area'){
-                    
-                    // echo "in IF of TRY";
                     $stmt->bindValue(":$key",Input::getNumber($key),PDO::PARAM_STR);
-
                 } else {
-                    
-                    // echo "in ELSE of TRY\n";
                     $stmt->bindValue(":$key",Input::getString($key),PDO::PARAM_STR);
-
                 }
 
             } catch (Exception $e) {
-                
-                array_push($errors, $e->getMessage()) ;
-
+                array_push( $errors, $e->getMessage() ) ;
             }
-
-
         }
         
         if($errors == []){
@@ -109,7 +99,7 @@ require '../db_connect.php';
 
         
 
-        // $stmt->bindValue(':parkname',Input::getString('parkname'),PDO::PARAM_STR);
+        // $stmt->bindValue(':parkname',           Input::getString('parkname'),       PDO::PARAM_STR);
         // $stmt->bindValue(':location',           Input::getString('location'),       PDO::PARAM_STR);
         // $stmt->bindValue(':date_established',   $_POST['date_established'],         PDO::PARAM_STR);
         // $stmt->bindValue(':area',               Input::getNumber('area'),           PDO::PARAM_STR);
