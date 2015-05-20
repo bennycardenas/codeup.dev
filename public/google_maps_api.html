@@ -6,8 +6,8 @@
 
     <style type="text/css">
   #map-canvas {
-    width: 480px;
-    height: 480px;
+    width: 580px;
+    height: 580px;
   }
   </style>
 
@@ -18,11 +18,9 @@
   <div id="map-canvas"></div>
 
   <!-- Load the Google Maps API [DON'T FORGET TO USE A KEY] -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF11wPi5SN3aYUOdRD8DnEYfCNAFI0ClA"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmGNHQweHfwPZjr66OBQcY8jlYcF30dwY"></script>
 
   <!-- Script to show address on map -->
-  
-
 
   <script type="text/javascript">
 
@@ -35,14 +33,14 @@
     var geocoder = new google.maps.Geocoder();
 
     geocoder.geocode( { 'address': address}, function(results, status) {
-  	
+
   	// Check for a successful result
   	if (status == google.maps.GeocoderStatus.OK) {
   		} else {
     // Show an error message with the status if our request fails
     alert("Geocoding was not successful - STATUS: " + status);
-  }
-    
+    }
+
     // Set our map options
     var mapOptions = {
       // This sets the center of the map at our location
@@ -51,7 +49,7 @@
       // Set the zoom level
       zoom: 18,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-	
+
       };
 
       map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -60,7 +58,7 @@
 
 // 	// Render the map
     var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-   
+
   	// Create lat and long for our marker position
     var vivaPho = { lat: 29.531563, lng: -98.522059 };
 
@@ -76,11 +74,11 @@
 
     });
 
-  	// WINDOW
-	// Create a new infoWindow object with content
-	var infowindow = new google.maps.InfoWindow({
-    content: 'Viva Pho, indeed!'
-	});
+    // WINDOW
+  	// Create a new infoWindow object with content
+  	var infowindow = new google.maps.InfoWindow({
+      content: 'Viva Pho, indeed!'
+  	});
 
 // Open the window using our map and marker
 infowindow.open(map,marker);

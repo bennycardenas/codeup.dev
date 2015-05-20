@@ -8,6 +8,20 @@ require '../db_connect.php';
 // var_dump($_REQUEST);
 // var_dump($_POST);
 
+    
+    $savedInputs = [
+        'parkname'          => '',
+        'location'          => '',
+        'date_established'  => '',
+        'area'              => '',
+        'description'       => '',
+
+        ];
+
+    if (isset($_POST['submit'])) {
+        $savedInputs = array_replace($savedInputs, $_POST);
+    }
+
     // This determines what page the application is on for pagination purposes
     if (!empty($_GET['page'])) {
         $current_page = $_GET['page'];
@@ -74,7 +88,7 @@ require '../db_connect.php';
         $errors = [];
 
         foreach ($_POST as $key => $value) {
-            
+
             try {
   
                 if ($key == 'area'){
@@ -97,8 +111,6 @@ require '../db_connect.php';
                 }
         }
 
-        
-
         // $stmt->bindValue(':parkname',           Input::getString('parkname'),       PDO::PARAM_STR);
         // $stmt->bindValue(':location',           Input::getString('location'),       PDO::PARAM_STR);
         // $stmt->bindValue(':date_established',   $_POST['date_established'],         PDO::PARAM_STR);
@@ -106,11 +118,9 @@ require '../db_connect.php';
         // $stmt->bindValue(':description',        Input::getString('description'),    PDO::PARAM_STR);
 
         // getNumber();
-
-        
         
         // POST !EMPTY IS TRUE AS LONG AS THE FORM IS SUBMITTED
-    } elseif (!empty($_POST)) {
+        } elseif (!empty($_POST)) {
                 echo "inside elseif ...\n";
             if (empty($_POST['parkname'])) {
                 echo 'Please enter a name';
@@ -202,7 +212,6 @@ require '../db_connect.php';
         <div id='main'>
             <div id='top'>
                 <table class="table table-nonfluid table-striped">
-                    
 
                     <thead>
                         <tr>
@@ -210,7 +219,7 @@ require '../db_connect.php';
                             <th>Location</th>
                             <th>Date Established</th>
                             <th>Area in Acres</th>
-                            <th>Description</th>  
+                            <th>Description</th>
                         </tr>
                     </thead>
 
@@ -221,7 +230,7 @@ require '../db_connect.php';
                             <td><?php echo $park['date_established']; ?></td>
                             <td><?php echo $park['area_in_acres']; ?></td>
                             <td><?php echo $park['description']; ?></td>
-                        </tr>    
+                        </tr>
                     <?php endforeach; ?>
                 </table>
             </div>
@@ -238,7 +247,7 @@ require '../db_connect.php';
                             }
 
                             for ($i=1; $i<=$total; $i++)
-                                
+
                                 if($i == $current_page)
                                 {
                                     echo $i;
@@ -261,7 +270,7 @@ require '../db_connect.php';
                 <form method="POST" action="/national_parks.php">
                     <p>
                         <label for="parkname" ></label>
-                        <input id="parkname" name="parkname" type="text" placeholder="Park Name">
+                        <input id="parkname" name="parkname" type="text" placeholder="Park Name" value="">
                     </p>
                     <p>
                         <label for="location"></label>
@@ -279,7 +288,7 @@ require '../db_connect.php';
                         <textarea id="description" name="description" rows="5" cols="40" placeholder="Description"></textarea>
                     </p>
                     <p>
-                        <input type="submit">
+                        <input type="submit" name="submit">
                     </p>
                 </form>
             </div>

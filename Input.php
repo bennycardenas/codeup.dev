@@ -49,6 +49,12 @@ class Input
         } else {
             throw new EXCEPTION("$key must be a non-numeric string");
         }
+
+
+        // if !is_string($key) {
+        //     throw new InvalidArgumentException();
+        // }
+
     }
 
     public static function getNumber($key)
@@ -63,6 +69,12 @@ class Input
         } else {
             throw new EXCEPTION("Key must be a number");
         }
+
+
+        // if (!is_numeric($min) || !is_numeric($max)){
+        //     throw new InvalidArgumentException();
+        // }
+
     }
 
     ///////////////////////////////////////////////////////////////////////////
